@@ -14,3 +14,27 @@ html {
     font-family: "Playfair Display", serif;
     font-size: 1.2rem;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    width: 100%;
+    background-color: #fffbfb;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    height: 10vh;
+    z-index: 1;
+
+    display: grid;
+    place-content: center;
+}
+
+/* MAIN */
+main {
+    background-color: #f0eef1;
+    flex: 1;
+}
