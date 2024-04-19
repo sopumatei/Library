@@ -33,8 +33,33 @@ header {
     place-content: center;
 }
 
+header h1 {
+    letter-spacing: 1.8px;
+}
+
 /* MAIN */
 main {
     background-color: #f0eef1;
     flex: 1;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 2rem;
+}
+
+button {
+    font-weight: bolder;
+    font-family: inherit;
+    font-size: 1.2rem;
+    width: 10rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #fffbfb;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #f0eef1;
 }
