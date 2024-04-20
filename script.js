@@ -27,8 +27,8 @@ function addBookToLibrary(bk) {
     removeBtn.classList.add('book-btn');
 
     title.textContent = `"${bk.title}"`;
-    author.textContent = bk.author;
-    pages.textContent = bk.pages;
+    author.textContent = `Wrtitten by: ${bk.author}`;
+    pages.textContent = `Pages: ${bk.pages}`;
     removeBtn.textContent = "Remove";
 
     if(bk.read) {

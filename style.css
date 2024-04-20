@@ -49,6 +49,7 @@ main {
 }
 
 button {
+    position: relative;
     font-weight: bolder;
     font-family: inherit;
     font-size: 1.2rem;
@@ -57,9 +58,64 @@ button {
     border-radius: 0.5rem;
     background-color: #fffbfb;
     transition: all 0.2s ease-in-out;
+    z-index: 1;
+    overflow: hidden;
+}
+
+button::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fffbfb;
+    transition: all 0.2s ease-in-out;
+    z-index: -1;
 }
 
 button:hover {
     cursor: pointer;
+}
+
+button:hover::before {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* .add-btn:hover {
     background-color: #f0eef1;
+} */
+
+/* BOOKS CONTAINER */
+#books-container {
+    margin-top: 3rem;
+    width: min(90vw, 1200px);
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-flow: row;
+}
+
+.book-card {
+    width: 100%;
+    background-color: #fffbfb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    z-index: 1;
+}
+
+.button-group {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+}
+
+.book-btn {
+    width: 100%;
 }
