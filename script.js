@@ -9,8 +9,17 @@ function Book(name, author, pages, read) {
     this.read = read;
 }
 
-book1 = new Book("Curentii Spatiului", "Isac Asimov", 345, true);
-myLibrary.push(book1);
+function resetBooksGrid() {
+    booksContainer.innerHTML = '';
+}
+
+function updateBooksGrid() {
+    resetBooksGrid();
+
+    for(let book of myLibrary) {
+        addBookToLibrary(book);
+    }
+}
 
 function addBookToLibrary(bk) {
     const bookCard = document.createElement('div');
