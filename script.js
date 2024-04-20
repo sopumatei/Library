@@ -6,6 +6,7 @@ const frameShadow = document.getElementById('shadow-div');
 let activeOverlay = false;
 
 let myLibrary = [];
+getLocalStoreData();
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -59,6 +60,7 @@ function addBookToLibrary(bk) {
         const checkTitle = bk.title;
         myLibrary = myLibrary.filter((book) => book.title !== checkTitle);
         updateBooksGrid();
+        updateLocalStorage();
     })
 
     buttonGroup.appendChild(readBtn);
@@ -122,7 +124,28 @@ overlaySubmitBtn.addEventListener('click', (e) => {
     const newBook = createBook();
 
     myLibrary.push(newBook);
+    updateLocalStorage();
     updateBooksGrid();
     closeOverlay();
 })
 
+// LOCAL STORAGE
+function updateLocalStorage() {
+    localStorage.setItem("library", JSON.stringify(myLibrary));
+}
+
+function JSONToBook(book) {
+    return new Book(book.title, book.author, book.pages, book.read);
+} 
+
+function getLocalStoreData() {
+
+    if(localStorage.getItem("library")) {
+        const storedBooks = JSON.parse(localStorage.getItem("library"));
+        myLibrary = storedBooks.map((book) => JSONToBook(book));
+        updateBooksGrid();
+    }
+    else {
+        myLibrary = [];
+    }
+}
