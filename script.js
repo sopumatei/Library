@@ -1,13 +1,14 @@
 const booksContainer = document.getElementById('books-container');
 const addBookBtn = document.getElementById('add-btn');
 const overlayFrame = document.getElementById('add-book-frame');
+const overlaySubmitBtn = document.getElementById('submitBook');
 const frameShadow = document.getElementById('shadow-div');
 let activeOverlay = false;
 
-const myLibrary = [];
+let myLibrary = [];
 
-function Book(name, author, pages, read) {
-    this.name = name;
+function Book(title, author, pages, read) {
+    this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
@@ -33,27 +34,31 @@ function addBookToLibrary(bk) {
     removeBtn.textContent = "Remove";
 
     if(bk.read) {
-        removeBtn.textContent = "Read";
-        removeBtn.style.backgroundColor = "#9fff9c";
+        readBtn.textContent = "Read";
+        readBtn.style.backgroundColor = "#9fff9c";
     }
     else {
-        removeBtn.textContent = "Not read";
-        removeBtn.style.backgroundColor = "#ff9c9c";
+        readBtn.textContent = "Not read";
+        readBtn.style.backgroundColor = "#ff9c9c";
     }
 
     readBtn.addEventListener('click', () => {
         if(readBtn.textContent === "Not read") {
             readBtn.style.backgroundColor = "#9fff9c";
             readBtn.textContent = "Read";
+            bk.read = true;
         }
         else {
             readBtn.style.backgroundColor = "#ff9c9c";
             readBtn.textContent = "Not read";
+            bk.read = true;
         }
     })
 
     removeBtn.addEventListener('click', () => {
-        myLibrary.filter((book) => book.title !== title);
+        const checkTitle = bk.title;
+        myLibrary = myLibrary.filter((book) => book.title !== checkTitle);
+        updateBooksGrid();
     })
 
     buttonGroup.appendChild(readBtn);
@@ -63,6 +68,15 @@ function addBookToLibrary(bk) {
     bookCard.appendChild(pages);
     bookCard.appendChild(buttonGroup);
     booksContainer.appendChild(bookCard);
+}
+
+function createBook() {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const hasRead = document.getElementById('hasRead').checked;
+
+    return new Book(title, author, pages, hasRead);
 }
 
 function resetBooksGrid() {
@@ -77,23 +91,38 @@ function updateBooksGrid() {
     }
 }
 
-let isOverlayOn = false;
-
 addBookBtn.addEventListener('click', () => {
-    isOverlayOn = true;
     overlayFrame.style.transform = 'scale(1)';
     frameShadow.style.display = 'block';
     frameShadow.style.opacity= '1';
 })
 
-frameShadow.addEventListener('click', () => {
-    if(isOverlayOn) {
-        isOverlayOn = false;
-        overlayFrame.style.transform = 'scale(0)';
-        frameShadow.style.opacity= '0';
-        setTimeout(() => {
-            frameShadow.style.display = 'none';
-        }, 200)
-    }
+function closeOverlay() {
+    const title = document.getElementById('title');
+    const author = document.getElementById('author');
+    const pages = document.getElementById('pages');
+    const hasRead = document.getElementById('hasRead');
+
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    hasRead.checked = false;
+
+    overlayFrame.style.transform = 'scale(0)';
+    frameShadow.style.opacity= '0';
+    setTimeout(() => {
+        frameShadow.style.display = 'none';
+    }, 200)
+}
+
+frameShadow.addEventListener('click', closeOverlay)
+
+overlaySubmitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const newBook = createBook();
+
+    myLibrary.push(newBook);
+    updateBooksGrid();
+    closeOverlay();
 })
 
