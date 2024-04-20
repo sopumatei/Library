@@ -6,6 +6,7 @@
         <link rel="shortcut icon" type="x-icon" href="favicon.ico">
         <title>Library</title>
         <link rel="stylesheet" href="./style.css">
+        <script src="./script.js" defer></script>
     </head>
     <body>
         <header>
@@ -13,7 +14,7 @@
         </header>
 
         <main>
-            <button class="add-btn">Add book</button>
+            <button id="add-btn">Add book</button>
 
             <div id="books-container">
                     <div class="book-card">
@@ -71,19 +72,19 @@
 
         <div id="shadow-div"></div>
 
-        <div id="add-book-frame">
+        <form id="add-book-frame">
             <h3>Add new book</h3>
 
             <div class="frame-container">
-                <input id="title" type="text" placeholder="Title">
+                <input id="title" type="text" placeholder="Title" required>
             </div>
 
             <div class="frame-container">
-                <input id="author" type="text" placeholder="Author">
+                <input id="author" type="text" placeholder="Author" required>
             </div>
 
             <div class="frame-container">
-                <input id="pages" type="number" placeholder="Pages">
+                <input id="pages" type="number" placeholder="Pages" required>
             </div>
 
             <div class="frame-container">
@@ -91,9 +92,9 @@
                 <input id="hasRead" type="checkbox">
             </div>
 
-            <button>
+            <button type="submit">
                 Submit
             </button>
-        </div>
+        </form>
     </body>
 </html>

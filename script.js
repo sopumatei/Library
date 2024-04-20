@@ -1,4 +1,8 @@
 const booksContainer = document.getElementById('books-container');
+const addBookBtn = document.getElementById('add-btn');
+const overlayFrame = document.getElementById('add-book-frame');
+const frameShadow = document.getElementById('shadow-div');
+let activeOverlay = false;
 
 const myLibrary = [];
 
@@ -7,18 +11,6 @@ function Book(name, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-}
-
-function resetBooksGrid() {
-    booksContainer.innerHTML = '';
-}
-
-function updateBooksGrid() {
-    resetBooksGrid();
-
-    for(let book of myLibrary) {
-        addBookToLibrary(book);
-    }
 }
 
 function addBookToLibrary(bk) {
@@ -73,9 +65,35 @@ function addBookToLibrary(bk) {
     booksContainer.appendChild(bookCard);
 }
 
+function resetBooksGrid() {
+    booksContainer.innerHTML = '';
+}
 
-function showBooks() {
-    for(let i = 0; i < myLibrary.length; ++i) {
+function updateBooksGrid() {
+    resetBooksGrid();
 
+    for(let book of myLibrary) {
+        addBookToLibrary(book);
     }
 }
+
+let isOverlayOn = false;
+
+addBookBtn.addEventListener('click', () => {
+    isOverlayOn = true;
+    overlayFrame.style.transform = 'scale(1)';
+    frameShadow.style.display = 'block';
+    frameShadow.style.opacity= '1';
+})
+
+frameShadow.addEventListener('click', () => {
+    if(isOverlayOn) {
+        isOverlayOn = false;
+        overlayFrame.style.transform = 'scale(0)';
+        frameShadow.style.opacity= '0';
+        setTimeout(() => {
+            frameShadow.style.display = 'none';
+        }, 200)
+    }
+})
+
