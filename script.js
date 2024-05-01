@@ -6,14 +6,17 @@ const frameShadow = document.getElementById('shadow-div');
 let activeOverlay = false;
 
 let myLibrary = [];
-getLocalStoreData();
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 }
+
+getLocalStoreData();
 
 function addBookToLibrary(bk) {
     const bookCard = document.createElement('div');
@@ -52,8 +55,9 @@ function addBookToLibrary(bk) {
         else {
             readBtn.style.backgroundColor = "#ff9c9c";
             readBtn.textContent = "Not read";
-            bk.read = true;
+            bk.read = false;
         }
+        updateLocalStorage();
     })
 
     removeBtn.addEventListener('click', () => {
@@ -142,7 +146,7 @@ function getLocalStoreData() {
 
     if(localStorage.getItem("library")) {
         const storedBooks = JSON.parse(localStorage.getItem("library"));
-        myLibrary = storedBooks.map((book) => JSONToBook(book));
+        myLibrary = storedBooks.map((book) => new Book(book.title, book.author, book.pages, book.read));
         updateBooksGrid();
     }
     else {
